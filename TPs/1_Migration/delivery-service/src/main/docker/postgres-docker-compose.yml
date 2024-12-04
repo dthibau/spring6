@@ -1,0 +1,36 @@
+services:
+  delivery_postgresql:
+    image: postgres:15.6
+    container_name: delivery_postgresql
+    volumes:
+      - delivery_db:/var/lib/postgresql
+      - delivery_data:/var/lib/postgresql/data
+    networks:
+      - back
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+
+  delivery_pgadmin4:
+    image: dpage/pgadmin4:8.5
+    container_name: delivery_pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "admin@admin.com"
+      PGADMIN_DEFAULT_PASSWORD: "admin"
+    ports:
+      - "81:80"
+    volumes:
+      - delivery_pgadmin:/var/lib/pgadmin
+    depends_on:
+      - delivery_postgresql
+    networks:
+      - back
+volumes:
+  delivery_data:
+  delivery_db:
+  delivery_pgadmin:
+
+networks:
+  back:
