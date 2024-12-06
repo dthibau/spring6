@@ -1,0 +1,39 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://annuaire:1111/eureka/
+    healthcheck:
+      enabled: true
+    preferSameZoneEureka: true
+  instance:
+    metadataMap:
+      zone: zone1
+    
+
+logging:
+  level:
+    root: INFO
+
+
+spring:
+  kafka:
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer   
+    consumer:
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer   
+      properties:
+        spring.json.trusted.packages: '*'
+  datasource:
+    url:
+      'jdbc:h2:mem:testdb'
+       
+      
+app:
+  channel:
+    order-saga: 'order-saga'
+    ticket-command: 'ticket-command'
+    payment-command: 'payment-command'
+    payment-response: 'payment-response'
+    order-event: 'order-event'
+    ticket-event: 'ticket-event'
+    delivery-event: 'delivery-event'
